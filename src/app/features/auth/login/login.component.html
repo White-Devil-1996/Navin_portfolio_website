@@ -1,0 +1,57 @@
+<div class="login-page">
+  <div class="login-card">
+    <h2 class="title">Sign in</h2>
+
+    <form [formGroup]="form" (ngSubmit)="login()" novalidate>
+      <div class="field">
+        <label for="email">email</label>
+        <input id="email" type="text" formControlName="email" autocomplete="email" />
+        <div class="error" *ngIf="f['email'].touched && f['email'].invalid">
+          <small *ngIf="f['email'].errors?.['required']">email is required.</small>
+          <small *ngIf="f['email'].errors?.['minlength']">Minimum 3 characters.</small>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">password</label>
+        <div class="password-wrapper">
+          <input
+            id="password"
+            [type]="hidepassword ? 'password' : 'text'"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+          <button type="button" class="toggle" (click)="hidepassword = !hidepassword" aria-label="Toggle password">
+            {{ hidepassword ? 'Show' : 'Hide' }}
+          </button>
+        </div>
+        <div class="error" *ngIf="f['password'].touched && f['password'].invalid">
+          <small *ngIf="f['password'].errors?.['required']">password is required.</small>
+          <small *ngIf="f['password'].errors?.['minlength']">Minimum 6 characters.</small>
+        </div>
+      </div>
+
+      <div class="row-between">
+        <label class="remember">
+          <input type="checkbox" formControlName="remember" />
+          Remember me
+        </label>
+
+        <a class="forgot" routerLink="/auth/forgot">Forgot?</a>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" type="submit" [disabled]="loading">
+          <span *ngIf="!loading">Sign in</span>
+          <span *ngIf="loading" class="loading-dot">Loading…</span>
+        </button>
+      </div>
+
+      <div class="error global-error" *ngIf="error">{{ error }}</div>
+    </form>
+
+    <div class="footer">
+      <p>Don’t have an account? <a routerLink="/auth/register">Register</a></p>
+    </div>
+  </div>
+</div>

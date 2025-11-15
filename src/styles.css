@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file. Global vendor styles are
+  already included via `angular.json` `styles` array, so avoid
+  importing them here to prevent duplicate requests/processing. */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  --primary-white: #fff;
+  /* Primary Theme */
+  --primary-bg-color: #0a7de9;
+  --secondary-bg-color: #1976d2;
+  --third-bg-color: #ff4081;
+
+  /* Accents */
+  --fourth-bg-color: #ff9800;
+  --fifth-bg-color: #9c27b0;
+  --sixth-bg-color: #00bcd4;
+  --seventh-bg-color: #4caf50;
+  --eighth-bg-color: #ff5722;
+
+  /* Extended */
+  --ninth-bg-color: #009688;
+  --tenth-bg-color: #3f51b5;
+  --eleventh-bg-color: #cddc39;
+  --twelfth-bg-color: #e91e63;
+
+  /* Pastels */
+  --pastel-blue: #a7c7e7;
+  --pastel-green: #b2e2b4;
+  --pastel-pink: #f7b2c4;
+  --pastel-yellow: #ffeaa7;
+
+  /* Neon */
+  --neon-purple: #a259ff;
+  --neon-blue: #00eaff;
+  --neon-green: #2eff86;
+  --neon-orange: #ff9f1c;
+
+  /* Dark Mode */
+  --dark-bg: #121212;
+  --dark-card: #1e1e1e;
+  --dark-border: #2a2a2a;
+  --dark-text: #e0e0e0;
+
+  /* Gradient Pairs */
+  --cool-start: #6a11cb;
+  --cool-end: #2575fc;
+
+  --aqua-start: #00c6ff;
+  --aqua-end: #0072ff;
+}

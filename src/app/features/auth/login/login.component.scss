@@ -1,0 +1,17 @@
+/* Basic styles for login component */
+:host {
+  display: block;
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+button[type="submit"] {
+  align-self: flex-end;
+}
