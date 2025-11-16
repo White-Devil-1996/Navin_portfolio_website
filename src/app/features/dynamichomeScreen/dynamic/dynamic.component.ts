@@ -263,30 +263,63 @@ private sendMailUrl = 'http://localhost:3000/api/send-mail';
     };
   }
 
+  // private initScrollTop() {
+  //   const scrollTop = document.querySelector('.scroll-top');
+  //   if (!scrollTop) return;
+
+  //   // Toggle active class based on scroll position
+  //   const toggleScrollTop = () => {
+  //     window.scrollY > 100 
+  //       ? scrollTop.classList.add('active') 
+  //       : scrollTop.classList.remove('active');
+  //   };
+
+  //   // Add click listener to scroll to top
+  //   scrollTop.addEventListener('click', (e: Event) => {
+  //     e.preventDefault();
+  //     window.scrollTo({
+  //       top: 0,
+  //       behavior: 'smooth'
+  //     });
+  //   });
+
+  //   // Initialize on load and listen to scroll events
+  //   window.addEventListener('load', toggleScrollTop);
+  //   document.addEventListener('scroll', toggleScrollTop);
+  // }
+
   private initScrollTop() {
-    const scrollTop = document.querySelector('.scroll-top');
-    if (!scrollTop) return;
+  const scrollTop = document.querySelector('.scroll-top');
+  const callBtn = document.getElementById('call-button');
 
-    // Toggle active class based on scroll position
-    const toggleScrollTop = () => {
-      window.scrollY > 100 
-        ? scrollTop.classList.add('active') 
-        : scrollTop.classList.remove('active');
-    };
+  // Toggle active class based on scroll position
+  const toggleScrollTop = () => {
+    const active = window.scrollY > 100;
+    if (scrollTop) {
+      active ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
+    }
+    if (callBtn) {
+      active ? callBtn.classList.add('active') : callBtn.classList.remove('active');
+    }
+  };
 
-    // Add click listener to scroll to top
+  // Add click listener to scroll to top
+  if (scrollTop) {
     scrollTop.addEventListener('click', (e: Event) => {
       e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-
-    // Initialize on load and listen to scroll events
-    window.addEventListener('load', toggleScrollTop);
-    document.addEventListener('scroll', toggleScrollTop);
   }
+
+  // Note: We DO NOT intercept the call button click — the href="tel:..." will open the dialer directly.
+  // Initialize on load and listen to scroll events
+  window.addEventListener('load', toggleScrollTop);
+  document.addEventListener('scroll', toggleScrollTop, { passive: true });
+
+  // call once immediately
+  toggleScrollTop();
+}
+
 
   private initNavmenuScrollspy() {
     const navmenulinks = document.querySelectorAll('.navmenu a');

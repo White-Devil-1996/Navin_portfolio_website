@@ -31,3 +31,44 @@
   visibility: visible;
   opacity: 1;
 }
+
+
+/* Call button styles */
+.call-button {
+  position: fixed;
+  right: 1rem;
+  bottom: 5.5rem;         /* stacked above the scroll-top; adjust if needed */
+  width: 44px;
+  height: 44px;
+  background: #28a745;    /* green for call; change if you want different color */
+  color: #fff;
+  border-radius: 50%;
+  z-index: 9999;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transition: transform .3s ease, opacity .3s ease;
+  opacity: 0;
+  transform: translateY(10px) scale(.8);
+  text-decoration: none;
+}
+
+.call-button i {
+  font-size: 1.1rem;
+}
+
+/* visible state */
+.call-button.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* small hover */
+.call-button:hover {
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+/* keep scroll-top slightly lower; adjust bottom values if needed */
+#scroll-top {
+  right: 1rem;
+  bottom: 1rem;
+}
