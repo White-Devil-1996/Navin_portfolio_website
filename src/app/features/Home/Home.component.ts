@@ -15,9 +15,14 @@ export class HomeComponent implements OnInit {
 
     let origin = window.location.origin;
     if (origin.includes('https://navin-my-portfolio.web.app')) {
-      console.log('Running on production server');
+      console.log('Running on portfolio production server');
       this.router.navigate(['/dynamicComp']);
-    } else if (origin.includes('http://localhost:')) {
+    } 
+    else if (origin.includes('localhost')) {
+      console.log('Running on production server');
+      // this.router.navigate(['/dynamicComp']);
+    } 
+    else{
       console.log('Running on localhost');
     }
 
