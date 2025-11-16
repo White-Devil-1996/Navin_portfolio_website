@@ -1,3 +1,36 @@
+/* ensure toggle is visible, tappable and on top */
+.header {
+  position: relative; /* required if header-toggle is absolutely positioned inside */
+  z-index: 1000;      /* keep header above page content */
+}
+
+/* the toggle icon */
+.header-toggle {
+  display: block;           /* defensive */
+  position: absolute;       /* keep it inside header */
+  top: 14px;                /* adjust as needed */
+  right: 16px;              /* adjust as needed */
+  font-size: 1.6rem;        /* larger tap target */
+  line-height: 1;
+  padding: 6px;
+  cursor: pointer;
+  z-index: 1100;            /* above header */
+  background: transparent;
+  -webkit-tap-highlight-color: transparent; /* iOS nicer tap */
+}
+
+/* make sure it’s visible on small screens even if other rules hide it */
+@media (max-width: 1199.98px) {
+  .header .header-toggle {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
+
+
+
 /* Scroll Top Button */
 .scroll-top {
   position: fixed;
