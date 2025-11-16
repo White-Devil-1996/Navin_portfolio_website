@@ -8,13 +8,13 @@ import { DynamicComponent } from './features/dynamichomeScreen/dynamic/dynamic.c
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-    { path: 'dynamicComp', component: DynamicComponent },
 
+  // Added route webpage
+  { path: 'dynamicComp', component: DynamicComponent },
+
+
+  // Added route to webapp
   { path: 'login', component: LoginComponent },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard]
-  },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];

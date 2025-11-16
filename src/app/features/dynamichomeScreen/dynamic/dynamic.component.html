@@ -1,109 +1,85 @@
-<header id="header" class="header dark-background d-flex flex-column" [class.header-show]="headerShow()">
-  <i class="header-toggle d-xl-none" [class.bi-list]="!headerShow()" [class.bi-x]="headerShow()"
-    (click)="toggleHeader()"></i>
+<header *ngIf="pageData?.header" id="header" class="header dark-background d-flex flex-column" [class.header-show]="headerShow()">
+  <i class="header-toggle d-xl-none" [class.bi-list]="!headerShow()" [class.bi-x]="headerShow()" (click)="toggleHeader()"></i>
 
   <div class="profile-img">
-    <img src="assets/img/portfolios/IMG_0976.JPG" alt="NAVIN T V" class="img-fluid rounded-circle">
+    <img [src]="pageData?.header?.profileImg" alt="{{ pageData?.header?.sitename }}" class="img-fluid rounded-circle">
   </div>
 
   <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-    <h1 class="sitename">NAVIN T V</h1>
+    <h1 class="sitename">{{ pageData?.header?.sitename }}</h1>
   </a>
 
   <div class="social-links text-center">
-    <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-    <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
-    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    <a *ngFor="let s of pageData?.header?.social" [href]="s.href" [ngClass]="s.name">
+      <i [class]="s.icon"></i>
+    </a>
   </div>
 
   <nav id="navmenu" class="navmenu">
     <ul>
-      <li><a href="#hero" class="active" (click)="closeHeader($event)"><i class="bi bi-house navicon"></i>Home</a></li>
-      <li><a href="#about" (click)="closeHeader($event)"><i class="bi bi-person navicon"></i> About</a></li>
-      <li><a href="#resume" (click)="closeHeader($event)"><i class="bi bi-file-earmark-text navicon"></i> Resume</a> </li>
-      <li><a href="#portfolio" (click)="closeHeader($event)"><i class="bi bi-images navicon"></i> Portfolio</a></li>
-      <li><a href="#services" (click)="closeHeader($event)"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
-      <li><a href="#pricing" (click)="closeHeader($event)"><i class="bi bi-hdd-stack navicon"></i> Pricing</a></li>
-       
-      <!-- <li class="dropdown"><a href="#" (click)="closeHeader($event)"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-          <ul>
-            <li><a href="#">Dropdown 1</a></li>
-            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Deep Dropdown 1</a></li>
-                <li><a href="#">Deep Dropdown 2</a></li>
-                <li><a href="#">Deep Dropdown 3</a></li>
-                <li><a href="#">Deep Dropdown 4</a></li>
-                <li><a href="#">Deep Dropdown 5</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Dropdown 2</a></li>
-            <li><a href="#">Dropdown 3</a></li>
-            <li><a href="#">Dropdown 4</a></li>
-          </ul>
-        </li> -->
-      <li><a href="#contact" (click)="closeHeader($event)"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+      <li *ngFor="let nav of pageData?.header?.nav">
+        <a [href]="nav.href" (click)="closeHeader($event)">
+          <i [class]="nav.icon + ' navicon'"></i>{{ nav.label }}
+        </a>
+      </li>
     </ul>
   </nav>
-
 </header>
 
 <main class="main">
   <!-- Hero Section -->
-  <section id="hero" class="hero section dark-background">
-    <img src="assets/img/portfolios/hero-bg.jpg" alt="" data-aos="fade-in" class="">
+  <section *ngIf="pageData?.hero" id="hero" class="hero section dark-background">
+    <img [src]="pageData?.hero?.heroBg" alt="" data-aos="fade-in">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-      <h2>NAVIN T V</h2>
-      <p>I'm <span class="typed" data-typed-items="Full Stack Developer, Frontend Engineer, UI Specialist">Full Stack
-          Developer</span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
-      <p class="small">navintv4@gmail.com · +91 9080148956 · Chennai</p>
+      <h2>{{ pageData?.hero?.name }}</h2>
+      <p>
+        I'm
+        <span class="typed"
+              [attr.data-typed-items]="pageData?.hero?.typedItems?.length ? pageData.hero.typedItems.join(',') : ''">
+          {{ (pageData?.hero?.typedItems && pageData.hero.typedItems[0]) || '' }}
+        </span>
+        <span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span>
+      </p>
+      <p class="small">{{ pageData?.hero?.contactLine }}</p>
     </div>
   </section>
   <!-- /Hero Section -->
 
   <!-- About Section -->
-  <section id="about" class="about section">
+  <section *ngIf="pageData?.about" id="about" class="about section">
     <div class="container section-title" data-aos="fade-up">
       <h2>About</h2>
-      <p>Full Stack Developer with 4+ years of experience building responsive, user-friendly, and scalable web
-        applications. Skilled in Angular (v8–v14), Java, JavaScript, Spring Boot, HTML5, CSS3, Bootstrap, and SQL.
-        Strong in UI optimization, API integration, and performance tuning; experienced delivering enterprise banking
-        solutions and mentoring junior developers.</p>
+      <p>{{ pageData?.about?.summary }}</p>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
       <div class="row gy-4 justify-content-center">
         <div class="col-lg-4">
-          <img src="assets/img/portfolios/IMG_0976.JPG" class="img-fluid" alt="Navin T V">
+          <img [src]="pageData?.about?.image" class="img-fluid" [alt]="pageData?.header?.sitename">
         </div>
         <div class="col-lg-8 content">
-          <h2>Full Stack Web Developer</h2>
+          <h2>{{ pageData?.about?.roleTitle }}</h2>
+
           <div class="row">
             <div class="col-lg-6">
               <ul>
-                <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>1 Jun 1996</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>https://navin-my-portfolio.web.app</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+91 9080148956</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Chennai, Tamil Nadu</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>{{ pageData?.about?.profile?.birthday }}</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>{{ pageData?.about?.profile?.website }}</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>{{ pageData?.about?.profile?.phone }}</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>{{ pageData?.about?.profile?.city }}</span></li>
               </ul>
             </div>
             <div class="col-lg-6">
               <ul>
-                <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>29</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>BE (EEE)</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>navintv4@gmail.com</span></li>
-                <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>{{ pageData?.about?.profile?.age }}</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>{{ pageData?.about?.profile?.degree }}</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>{{ pageData?.about?.profile?.email }}</span></li>
+                <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>{{ pageData?.about?.profile?.freelance }}</span></li>
               </ul>
             </div>
           </div>
 
-          <p class="py-3">
-            Experienced building loan origination and enterprise banking modules (RLO, CLOS), performance-tuned UI
-            components, and end-to-end features for web applications. Comfortable working across frontend + backend
-            stacks, mentoring teammates, and shipping production-ready code.
-          </p>
+          <p class="py-3">{{ pageData?.about?.extra }}</p>
         </div>
       </div>
     </div>
@@ -111,170 +87,54 @@
   <!-- /About Section -->
 
   <!-- Stats Section -->
-
-  <section id="stats" class="stats section">
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row gy-4">
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item">
-          <i class="bi bi-clock-history"></i>
-          <!-- 4+ years experience from resume -->
-          <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>
-          <p><strong>Years Experience</strong> <span>Full Stack Developer</span></p>
+  <section *ngIf="pageData?.stats?.length" id="stats" class="stats section">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row gy-4">
+        <div class="col-lg-3 col-md-6" *ngFor="let s of pageData?.stats">
+          <div class="stats-item">
+            <i [class]="s.icon"></i>
+            <span data-purecounter-start="0" [attr.data-purecounter-end]="s.value" data-purecounter-duration="1" class="purecounter"></span>
+            <p><strong>{{ s.label }}</strong> <span>{{ s.subtitle }}</span></p>
+          </div>
         </div>
-      </div><!-- End Stats Item -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item">
-          <i class="bi bi-journal-richtext"></i>
-          <!-- Projects listed in resume: CLOS, RLO, QMS, Readymix, Student Tracking -->
-          <span data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="1" class="purecounter"></span>
-          <p><strong>Projects</strong> <span>Selected case studies</span></p>
-        </div>
-      </div><!-- End Stats Item -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item">
-          <i class="bi bi-building"></i>
-          <!-- Employers from resume: Intellect Design Arena Ltd., Delta Itech Solutions -->
-          <span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="1" class="purecounter"></span>
-          <p><strong>Companies</strong> <span>Professional experience</span></p>
-        </div>
-      </div><!-- End Stats Item -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item">
-          <i class="bi bi-award"></i>
-          <!-- Certifications: Oracle Certified Professional (OCP) -->
-          <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1" class="purecounter"></span>
-          <p><strong>Certifications</strong> <span>OCP — Jun 2022</span></p>
-        </div>
-      </div><!-- End Stats Item -->
-
+      </div>
     </div>
-  </div>
-</section>
-
+  </section>
   <!-- /Stats Section -->
 
   <!-- Skills Section -->
- 
-
-
-<section id="skills" class="skills section light-background">
-
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Skills</h2>
-    <p>Languages, frameworks, databases, tools and technologies I work with.</p>
-  </div>
-
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row skills-content skills-animation">
-
-      <!-- LEFT COLUMN -->
-      <div class="col-lg-6">
-        <h4 class="mb-3">Languages & Frameworks</h4>
-
-        <!-- HTML -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-html-48.png" class="skill-icon" alt="HTML">
-          <span class="skill"><span>HTML5</span> <i class="val">100%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="100"></div></div>
-        </div>
-
-        <!-- CSS -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-css-48.png" class="skill-icon" alt="CSS">
-          <span class="skill"><span>CSS3 / Bootstrap</span> <i class="val">90%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="90"></div></div>
-        </div>
-
-        <!-- JavaScript -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-js-64.png" class="skill-icon" alt="JavaScript">
-          <span class="skill"><span>JavaScript / jQuery</span> <i class="val">85%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="85"></div></div>
-        </div>
-
-        <!-- Angular -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-angularjs-48.png" class="skill-icon" alt="Angular">
-          <span class="skill"><span>Angular (v8 - v14)</span> <i class="val">85%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="85"></div></div>
-        </div>
-
-        <!-- Java -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-java-48.png" class="skill-icon" alt="Java">
-          <span class="skill"><span>Java / Spring Boot</span> <i class="val">75%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="75"></div></div>
-        </div>
-
-        <!-- Postman -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-postman-inc-24.png" class="skill-icon" alt="Postman">
-          <span class="skill"><span>Postman / API Testing</span> <i class="val">80%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="80"></div></div>
-        </div>
-
-      </div>
-
-      <!-- RIGHT COLUMN -->
-      <div class="col-lg-6">
-        <h4 class="mb-3">Databases, Tools & OS</h4>
-
-        <!-- SQL -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-sql-48.png" class="skill-icon" alt="SQL">
-          <span class="skill"><span>SQL / PL-SQL</span> <i class="val">80%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="80"></div></div>
-        </div>
-
-        <!-- Oracle -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-sql-48.png" class="skill-icon" alt="Oracle">
-          <span class="skill"><span>Oracle Database</span> <i class="val">85%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="85"></div></div>
-        </div>
-
-        <!-- PostgreSQL -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-sql-48.png" class="skill-icon" alt="PostgreSQL">
-          <span class="skill"><span>PostgreSQL</span> <i class="val">80%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="80"></div></div>
-        </div>
-
-        <!-- GitHub -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-github-64.png" class="skill-icon" alt="GitHub">
-          <span class="skill"><span>Version Control (GitHub)</span> <i class="val">85%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="85"></div></div>
-        </div>
-
-        <!-- Git -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-git-50.png" class="skill-icon" alt="Git">
-          <span class="skill"><span>Git (Branching, Merge, Rebase)</span> <i class="val">90%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="90"></div></div>
-        </div>
-
-        <!-- OS -->
-        <div class="progress mb-3 skill-item">
-          <img src="assets/icons/portfolio/icons8-android-os-48.png" class="skill-icon" alt="OS">
-          <span class="skill"><span>OS: Windows & macOS</span> <i class="val">95%</i></span>
-          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="95"></div></div>
-        </div>
-
-      </div>
-
+  <section *ngIf="pageData?.skills" id="skills" class="skills section light-background">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Skills</h2>
+      <p>Languages, frameworks, databases, tools and technologies I work with.</p>
     </div>
-  </div>
-</section>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row skills-content skills-animation">
+        <div class="col-lg-6">
+          <h4 class="mb-3">Languages & Frameworks</h4>
+          <div class="progress mb-3 skill-item" *ngFor="let skill of pageData?.skills?.left">
+            <img [src]="skill?.icon" class="skill-icon" [alt]="skill?.name">
+            <span class="skill"><span>{{ skill?.name }}</span> <i class="val">{{ skill?.val }}%</i></span>
+            <div class="progress-bar-wrap"><div class="progress-bar" [attr.aria-valuenow]="skill?.val"></div></div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <h4 class="mb-3">Databases, Tools & OS</h4>
+          <div class="progress mb-3 skill-item" *ngFor="let skill of pageData?.skills?.right">
+            <img [src]="skill?.icon" class="skill-icon" [alt]="skill?.name">
+            <span class="skill"><span>{{ skill?.name }}</span> <i class="val">{{ skill?.val }}%</i></span>
+            <div class="progress-bar-wrap"><div class="progress-bar" [attr.aria-valuenow]="skill?.val"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- /Skills Section -->
 
   <!-- Resume Section -->
-  <section id="resume" class="resume section">
+  <section *ngIf="pageData?.resume" id="resume" class="resume section">
     <div class="container section-title" data-aos="fade-up">
       <h2>Resume</h2>
       <p>Summary of education, work experience, projects and certifications.</p>
@@ -287,22 +147,21 @@
         <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
           <h3 class="resume-title">Summary</h3>
           <div class="resume-item pb-0">
-            <h4>NAVIN T V</h4>
-            <p><em>Full Stack Developer with 4+ years of experience in building responsive and scalable web
-                applications, strong in Angular, Java, Spring Boot, and SQL.</em></p>
+            <h4>{{ pageData?.resume?.summary?.name || '—' }}</h4>
+            <p><em>{{ pageData?.resume?.summary?.title }}</em></p>
             <ul>
-              <li>Chennai, Tamil Nadu</li>
-              <li>+91 9080148956</li>
-              <li>navintv4@gmail.com</li>
+              <li>{{ pageData?.resume?.summary?.location }}</li>
+              <li>{{ pageData?.resume?.summary?.phone }}</li>
+              <li>{{ pageData?.resume?.summary?.email }}</li>
             </ul>
           </div>
 
           <h3 class="resume-title">Education</h3>
-          <div class="resume-item">
-            <h4>BE (Electrical & Electronics Engineering)</h4>
-            <h5>2014 - 2018</h5>
-            <p><em>Krishnasamy College of Engineering and Technology (Affiliated to Anna University)</em></p>
-            <p>GPA: 6.8</p>
+          <div class="resume-item" *ngFor="let ed of pageData?.resume?.education">
+            <h4>{{ ed?.degree }}</h4>
+            <h5>{{ ed?.years }}</h5>
+            <p><em>{{ ed?.school }}</em></p>
+            <p>GPA: {{ ed?.gpa }}</p>
           </div>
         </div>
 
@@ -310,31 +169,14 @@
         <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
           <h3 class="resume-title">Professional Experience</h3>
 
-          <div class="resume-item">
-            <h4>Fullstack Developer — Intellect Design Arena Ltd.</h4>
-            <h5>Oct 2022 – Aug 2025</h5>
-            <p><em>Led FullStack development for enterprise banking applications.</em></p>
+          <div class="resume-item" *ngFor="let ex of pageData?.resume?.experience">
+            <h4>{{ ex?.title }}</h4>
+            <h5>{{ ex?.period }}</h5>
+            <p><em>{{ ex?.bullets?.[0] ? ex.bullets[0] : '' }}</em></p>
             <ul>
-              <li>Built and maintained loan origination modules (RLO, CLOS) and onboarding flows for banking clients.
-              </li>
-              <li>Designed UI components with Angular and Bootstrap; integrated REST APIs and improved cross-platform
-                performance.</li>
-              <li>Mentored junior developers, performed code reviews, and enforced best practices.</li>
-              <li>Optimized UI performance to reduce load times and improve scalability.</li>
+              <li *ngFor="let b of ex?.bullets">{{ b }}</li>
             </ul>
           </div>
-
-          <div class="resume-item">
-            <h4>Frontend UI Developer — Delta Itech Solutions Pvt Ltd.</h4>
-            <h5>Aug 2021 – Oct 2022</h5>
-            <p><em>Developed responsive UI components and integrated backend services.</em></p>
-            <ul>
-              <li>Created interactive components using Angular, HTML5, CSS3 and JavaScript.</li>
-              <li>Integrated APIs and built billing, tracking and reporting modules.</li>
-              <li>Worked on projects across construction, education, and government domains.</li>
-            </ul>
-          </div>
-
         </div>
       </div>
 
@@ -342,18 +184,9 @@
       <div class="row mt-4">
         <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
           <h3 class="resume-title">Projects</h3>
-          <div class="resume-item">
-            <h4>Corporate Loan Origination System (CLOS)</h4>
-            <p>Built onboarding, borrower details, and financial modules for Arab Bank.</p>
-          </div>
-          <div class="resume-item">
-            <h4>Retail Loan Origination (RLO)</h4>
-            <p>Developed loan application and customer onboarding modules for Exim Bank.</p>
-          </div>
-          <div class="resume-item">
-            <h4>QMS & Readymix</h4>
-            <p>Quarry management and civil construction apps for tracking vehicles, billing, inventory and fuel/machine
-              management.</p>
+          <div class="resume-item" *ngFor="let pr of pageData?.resume?.projects">
+            <h4>{{ pr?.title }}</h4>
+            <p>{{ pr?.desc }}</p>
           </div>
         </div>
 
@@ -361,359 +194,153 @@
           <h3 class="resume-title">Certifications & Tools</h3>
           <div class="resume-item">
             <h4>Certifications</h4>
-            <p>Oracle Certified Professional (OCP) — Jun 2022</p>
+            <p *ngFor="let c of pageData?.resume?.certifications">{{ c }}</p>
           </div>
           <div class="resume-item">
             <h4>Tools & Technologies</h4>
-            <p>HTML5, CSS3, JavaScript, jQuery, Bootstrap, Angular (8–14), Java, Spring Boot, SQL, PL/SQL, Postman,
-              GitHub, VS Code, SQL Developer.</p>
+            <p>{{ pageData?.resume?.tools || '' }}</p>
           </div>
         </div>
       </div>
-
     </div>
 
-
     <div class="download-resume text-center mb-4" data-aos="fade-up" data-aos-delay="120">
-  <a href="assets/resume/navin_resume.pdf" download class="btn btn-primary resume-download-btn">
-    <i class="bi bi-download me-2"></i> Download Resume
-  </a>
-</div>
-
-
-
+      <a href="assets/resume/navin_resume.pdf" download class="btn btn-primary resume-download-btn">
+        <i class="bi bi-download me-2"></i> Download Resume
+      </a>
+    </div>
   </section>
   <!-- /Resume Section -->
 
- <!-- Portfolio Section -->
-<section id="portfolio" class="portfolio section light-background">
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Portfolio</h2>
-    <p>Selected projects: enterprise banking modules, construction & quarry management systems, and educational web apps — built using Angular, Java / Spring Boot and modern frontend tooling.</p>
-  </div>
-
-  <div class="container">
-    <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-      <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-        <li data-filter="*" class="filter-active">All</li>
-        <li data-filter=".filter-banking">Banking</li>
-        <li data-filter=".filter-construction">Construction</li>
-        <li data-filter=".filter-education">Education</li>
-        <li data-filter=".filter-tools">Tools</li>
-      </ul>
-
-      <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-        <!-- CLOS -->
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-banking">
-          <div class="portfolio-content h-100">
-            <img src="assets/img/portfolios/portfolio/app-1.jpg" class="img-fluid" alt="CLOS - Corporate Loan Origination">
-            <div class="portfolio-info">
-              <h4>Corporate Loan Origination (CLOS)</h4>
-              <p>Onboarding, borrower details and financial modules built for corporate lending workflows (Arab Bank).</p>
-              <a href="assets/img/portfolios/portfolio/app-1.jpg" title="CLOS" data-gallery="portfolio-gallery-banking" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <!-- RLO -->
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-banking">
-          <div class="portfolio-content h-100">
-            <img src="assets/img/portfolios/portfolio/app-2.jpg" class="img-fluid" alt="RLO - Retail Loan Origination">
-            <div class="portfolio-info">
-              <h4>Retail Loan Origination (RLO)</h4>
-              <p>Customer onboarding and loan application modules — user-friendly flows, validations and API integrations (Exim Bank).</p>
-              <a href="assets/img/portfolios/portfolio/app-2.jpg" title="RLO" data-gallery="portfolio-gallery-banking" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <!-- QMS -->
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-construction">
-          <div class="portfolio-content h-100">
-            <img src="assets/img/portfolios/portfolio/product-1.jpg" class="img-fluid" alt="QMS - Quarry Management">
-            <div class="portfolio-info">
-              <h4>QMS (Quarry Management)</h4>
-              <p>Vehicle and load tracking, tax and billing automation for quarry operations — dashboard + reporting modules.</p>
-              <a href="assets/img/portfolios/portfolio/product-1.jpg" title="QMS" data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Readymix -->
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-construction">
-          <div class="portfolio-content h-100">
-            <img src="assets/img/portfolios/portfolio/branding-1.jpg" class="img-fluid" alt="Readymix">
-            <div class="portfolio-info">
-              <h4>Readymix (Civil Construction)</h4>
-              <p>Inventory, billing and fuel/machine management app to streamline ready-mix operations and invoicing.</p>
-              <a href="assets/img/portfolios/portfolio/branding-1.jpg" title="Readymix" data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Student Tracking -->
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-education">
-          <div class="portfolio-content h-100">
-            <img src="assets/img/portfolios/portfolio/books-1.jpg" class="img-fluid" alt="Student Tracking System">
-            <div class="portfolio-info">
-              <h4>Student Tracking System</h4>
-              <p>Web app for monitoring student records, attendance and performance for educational institutes.</p>
-              <a href="assets/img/portfolios/portfolio/books-1.jpg" title="Student Tracking" data-gallery="portfolio-gallery-education" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tools / Demos -->
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-tools">
-          <div class="portfolio-content h-100">
-            <img src="assets/img/portfolios/portfolio/product-2.jpg" class="img-fluid" alt="UI Components & Tools">
-            <div class="portfolio-info">
-              <h4>UI Components & Tools</h4>
-              <p>Reusable Angular components, performance optimizations and integration utilities used across multiple projects.</p>
-              <a href="assets/img/portfolios/portfolio/product-2.jpg" title="UI Components" data-gallery="portfolio-gallery-tools" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- End Portfolio Container -->
-    </div>
-  </div>
-</section>
-<!-- /Portfolio Section -->
-
-<!-- Services Section -->
-<section id="services" class="services section">
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Services</h2>
-    <p>I deliver end-to-end web solutions — from UI/UX and frontend engineering to backend integration and performance tuning.</p>
-  </div>
-
-  <div class="container">
-    <div class="row gy-4">
-
-      <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
-        <div class="icon flex-shrink-0"><i class="bi bi-code-slash"></i></div>
-        <div>
-          <h4 class="title">Full-Stack Development</h4>
-          <p class="description">Angular + Java/Spring Boot implementations for scalable web applications and APIs.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
-        <div class="icon flex-shrink-0"><i class="bi bi-speedometer2"></i></div>
-        <div>
-          <h4 class="title">Performance & Optimization</h4>
-          <p class="description">UI performance tuning, lazy-loading, bundle optimizations and faster page loads.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-        <div class="icon flex-shrink-0"><i class="bi bi-box-seam"></i></div>
-        <div>
-          <h4 class="title">API Integration & Backend</h4>
-          <p class="description">REST API integration, data validation, and end-to-end feature integration with backend teams.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="400">
-        <div class="icon flex-shrink-0"><i class="bi bi-people"></i></div>
-        <div>
-          <h4 class="title">Mentoring & Code Reviews</h4>
-          <p class="description">Best-practice enforcement, code reviews and mentoring junior developers for maintainable codebases.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="500">
-        <div class="icon flex-shrink-0"><i class="bi bi-shield-check"></i></div>
-        <div>
-          <h4 class="title">Enterprise Banking Solutions</h4>
-          <p class="description">Domain experience in loan origination (RLO/CLOS), compliance workflows and onboarding flows.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="600">
-        <div class="icon flex-shrink-0"><i class="bi bi-gear"></i></div>
-        <div>
-          <h4 class="title">Custom Tooling & Dashboards</h4>
-          <p class="description">Administrative dashboards, reporting modules and operational tools for business users.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-<!-- /Services Section -->
-
-<!-- Testimonials Section -->
-<section id="testimonials" class="testimonials section light-background">
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Client Feedback</h2>
-    <p>Selected feedback from project stakeholders and internal reviewers (anonymized).</p>
-  </div>
-
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="swiper init-swiper">
-      <div class="swiper-wrapper">
-
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-            <p>
-              <i class="bi bi-quote quote-icon-left"></i>
-              <span>Delivered complex onboarding flows on time with clear communication. The UI improvements noticeably reduced user errors.</span>
-              <i class="bi bi-quote quote-icon-right"></i>
-            </p>
-            <h3>Project Stakeholder</h3>
-            <h4>Enterprise Banking</h4>
-          </div>
-        </div>
-
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-            <p>
-              <i class="bi bi-quote quote-icon-left"></i>
-              <span>Implemented reusable Angular components that sped up development across multiple teams — well-structured and documented.</span>
-              <i class="bi bi-quote quote-icon-right"></i>
-            </p>
-            <h3>Team Lead</h3>
-            <h4>Frontend Team</h4>
-          </div>
-        </div>
-
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-            <p>
-              <i class="bi bi-quote quote-icon-left"></i>
-              <span>Responsive and reliable — helped stabilize the production release and improved page load times significantly.</span>
-              <i class="bi bi-quote quote-icon-right"></i>
-            </p>
-            <h3>QA Manager</h3>
-            <h4>Operations</h4>
-          </div>
-        </div>
-
-      </div>
-      <div class="swiper-pagination"></div>
-    </div>
-  </div>
-</section>
-<!-- /Testimonials Section -->
-
-<!-- Pricing Section -->
-<section id="pricing" class="pricing section ">
-  <div class="container" data-aos="fade-up">
-    <div class="section-title " data-aos="fade-up">
-      <h2>Pricing</h2>
-      <p>Flexible plans for freelance & enterprise work — pick what fits your project.</p>
+  <!-- Portfolio Section -->
+  <section *ngIf="pageData?.portfolio?.length" id="portfolio" class="portfolio section light-background">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Portfolio</h2>
+      <p>Selected projects ...</p>
     </div>
 
-    <div class="pricing-wrapper bg-white rounded-3 p-4 shadow-sm" data-aos="fade-up" data-aos-delay="100">
-      <div class="row gy-4 justify-content-center">
+    <div class="container">
+      <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+        <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-banking">Banking</li>
+          <li data-filter=".filter-construction">Construction</li>
+          <li data-filter=".filter-education">Education</li>
+          <li data-filter=".filter-tools">Tools</li>
+        </ul>
 
-        <!-- Basic -->
-        <div class="col-lg-4 col-md-6">
-          <div class="card pricing-card h-100">
-            <div class="card-body d-flex flex-column">
-              <div class="top d-flex justify-content-between align-items-start mb-3">
-                <h5 class="card-title mb-0">Basic</h5>
-                <span class="badge badge-outline">Starter</span>
-              </div>
-
-              <p class="card-text text-muted small">Have design ready to build or small budget</p>
-
-              <div class="price my-3">
-                <span class="price-amount">$15</span><small class="price-unit">/Hour</small>
-              </div>
-
-              <ul class="list-unstyled features mb-4">
-                <li><i class="bi bi-arrow-right-short me-2"></i>Need your wireframe</li>
-                <li><i class="bi bi-arrow-right-short me-2"></i>Design with Figma, Framer</li>
-                <li><i class="bi bi-arrow-right-short me-2"></i>Product Design</li>
-                <li class="text-muted"><i class="bi bi-dash me-2"></i>Digital Marketing</li>
-                <li class="text-muted"><i class="bi bi-dash me-2"></i>Custom Support</li>
-              </ul>
-
-              <div class="mt-auto">
-                <a href="#contact" class="btn btn-success btn-sm w-100">Order Now <i class="bi bi-cart ms-2"></i></a>
+        <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-4 col-md-6 portfolio-item isotope-item"
+               *ngFor="let p of pageData?.portfolio"
+               [ngClass]="{
+                 'filter-banking': p?.category === 'banking',
+                 'filter-construction': p?.category === 'construction',
+                 'filter-education': p?.category === 'education',
+                 'filter-tools': p?.category === 'tools'
+               }">
+            <div class="portfolio-content h-100">
+              <img [src]="p?.img" class="img-fluid" [alt]="p?.title">
+              <div class="portfolio-info">
+                <h4>{{ p?.title }}</h4>
+                <p>{{ p?.desc }}</p>
+                <a [href]="p?.img" title="{{ p?.title }}" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
               </div>
             </div>
           </div>
+        </div><!-- End Portfolio Container -->
+      </div>
+    </div>
+  </section>
+  <!-- /Portfolio Section -->
+
+  <!-- Services Section -->
+  <section *ngIf="pageData?.services?.length" id="services" class="services section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Services</h2>
+      <p>I deliver end-to-end web solutions ...</p>
+    </div>
+
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 service-item d-flex" *ngFor="let s of pageData?.services">
+          <div class="icon flex-shrink-0"><i [class]="s?.icon"></i></div>
+          <div>
+            <h4 class="title">{{ s?.title }}</h4>
+            <p class="description">{{ s?.desc }}</p>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
+  <!-- /Services Section -->
 
-        <!-- Standard -->
-        <div class="col-lg-4 col-md-6">
-          <div class="card pricing-card h-100 highlight">
-            <div class="card-body d-flex flex-column">
-              <div class="top d-flex justify-content-between align-items-start mb-3">
-                <h5 class="card-title mb-0">Standard</h5>
-                <span class="badge badge-primary">Popular</span>
-              </div>
+  <!-- Testimonials Section -->
+  <section *ngIf="pageData?.testimonials?.length" id="testimonials" class="testimonials section light-background">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Client Feedback</h2>
+      <p>Selected feedback ...</p>
+    </div>
 
-              <p class="card-text text-muted small">Need full design & implementation — best balance</p>
-
-              <div class="price my-3">
-                <span class="price-amount">$59</span><small class="price-unit">/Hour</small>
-              </div>
-
-              <ul class="list-unstyled features mb-4">
-                <li><i class="bi bi-arrow-right-short me-2"></i>Website Design</li>
-                <li><i class="bi bi-arrow-right-short me-2"></i>Mobile Apps Design</li>
-                <li><i class="bi bi-arrow-right-short me-2"></i>Product Design</li>
-                <li><i class="bi bi-arrow-right-short me-2"></i>Digital Marketing</li>
-                <li class="text-muted"><i class="bi bi-dash me-2"></i>Custom Support</li>
-              </ul>
-
-              <div class="mt-auto">
-                <a href="#contact" class="btn btn-success w-100">Order Now <i class="bi bi-cart ms-2"></i></a>
-              </div>
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="swiper init-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" *ngFor="let t of pageData?.testimonials">
+            <div class="testimonial-item">
+              <p><i class="bi bi-quote quote-icon-left"></i><span>{{ t?.quote }}</span><i class="bi bi-quote quote-icon-right"></i></p>
+              <h3>{{ t?.author }}</h3>
+              <h4>{{ t?.role }}</h4>
             </div>
           </div>
         </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+  <!-- /Testimonials Section -->
 
-        <!-- Premium -->
-        <div class="col-lg-4 col-md-6">
-          <div class="card pricing-card h-100">
-            <div class="card-body d-flex flex-column">
-              <div class="top d-flex justify-content-between align-items-start mb-3">
-                <h5 class="card-title mb-0">Premium</h5>
-                <span class="badge badge-outline">Enterprise</span>
-              </div>
+  <!-- Pricing Section -->
+  <section *ngIf="pageData?.pricing?.length" id="pricing" class="pricing section">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Pricing</h2>
+        <p>Flexible plans ...</p>
+      </div>
 
-              <p class="card-text text-muted small">Large teams, SLAs, extended support</p>
+      <div class="pricing-wrapper bg-white rounded-3 p-4 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4 justify-content-center">
+          <div class="col-lg-4 col-md-6" *ngFor="let p of pageData?.pricing">
+            <div class="card pricing-card h-100" [ngClass]="{'highlight': p?.badge === 'Popular'}">
+              <div class="card-body d-flex flex-column">
+                <div class="top d-flex justify-content-between align-items-start mb-3">
+                  <h5 class="card-title mb-0">{{ p?.tier }}</h5>
+                  <span class="badge" [ngClass]="p?.badge === 'Popular' ? 'badge-primary' : 'badge-outline'">{{ p?.badge }}</span>
+                </div>
 
-              <div class="price my-3">
-                <span class="price-amount">$120</span><small class="price-unit">/Hour</small>
-              </div>
+                <p class="card-text text-muted small">{{ p?.description || '' }}</p>
 
-              <ul class="list-unstyled features mb-4">
-                <li><i class="bi bi-arrow-right-short me-2"></i>Dedicated Support</li>
-                <li><i class="bi bi-arrow-right-short me-2"></i>Onsite/Remote Training</li>
-                <li><i class="bi bi-arrow-right-short me-2"></i>Advanced Integrations</li>
-                <li><i class="bi bi-arrow-right-short me-2"></i>Priority SLA</li>
-                <li class="text-muted"><i class="bi bi-dash me-2"></i>Custom Reporting</li>
-              </ul>
+                <div class="price my-3">
+                  <span class="price-amount">{{ p?.price }}</span><small class="price-unit">{{ p?.period }}</small>
+                </div>
 
-              <div class="mt-auto">
-                <a href="#contact" class="btn btn-outline-success w-100">Contact Sales <i class="bi bi-telephone ms-2"></i></a>
+                <ul class="list-unstyled features mb-4">
+                  <li *ngFor="let f of p?.features"><i class="bi bi-arrow-right-short me-2"></i>{{ f }}</li>
+                </ul>
+
+                <div class="mt-auto">
+                  <a href="#contact" class="btn btn-success w-100">Order Now</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-      </div> <!-- row -->
-    </div> <!-- pricing-wrapper -->
-  </div>
-</section>
-<!-- End Pricing Section -->
+        </div> <!-- row -->
+      </div> <!-- pricing-wrapper -->
+    </div>
+  </section>
+  <!-- End Pricing Section -->
 
   <!-- Contact Section -->
-  <section id="contact" class="contact section light-background">
+  <section *ngIf="pageData?.contact" id="contact" class="contact section light-background">
     <div class="container section-title" data-aos="fade-up">
       <h2>Contact</h2>
       <p>Get in touch for work inquiries or collaborations.</p>
@@ -727,7 +354,7 @@
               <i class="bi bi-geo-alt flex-shrink-0"></i>
               <div>
                 <h3>Address</h3>
-                <p>203, C-29, Cosmo City, Pudupakkam, Chennai - 603103, Tamil Nadu</p>
+                <p>{{ pageData?.contact?.address }}</p>
               </div>
             </div>
 
@@ -735,7 +362,7 @@
               <i class="bi bi-telephone flex-shrink-0"></i>
               <div>
                 <h3>Call Us</h3>
-                <p>+91 9080148956</p>
+                <p>{{ pageData?.contact?.phone }}</p>
               </div>
             </div>
 
@@ -743,98 +370,49 @@
               <i class="bi bi-envelope flex-shrink-0"></i>
               <div>
                 <h3>Email Us</h3>
-                <p>navintv4@gmail.com</p>
+                <p>{{ pageData?.contact?.email }}</p>
               </div>
             </div>
 
-
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243.16014358884493!2d80.19729930158098!3d12.806898871312857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525bbd823abd5d%3A0x1783371632d9d684!2sC26%20Cosmocity!5e0!3m2!1sen!2sin!4v1763294419130!5m2!1sen!2sin"
-              frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe *ngIf="mapUrl" [src]="mapUrl" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
 
         <div class="col-lg-7">
-          <!-- <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-            <div class="row gy-4">
-              <div class="col-md-6">
-                <label for="name-field" class="pb-2">Your Name</label>
-                <input type="text" name="name" id="name-field" class="form-control" required="">
+          <form #contactForm="ngForm" (ngSubmit)="submitContact(contactForm)" novalidate class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <!-- form fields (kept minimal here) -->
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="text" name="name" class="form-control" placeholder="Your Name" ngModel required>
               </div>
-
-              <div class="col-md-6">
-                <label for="email-field" class="pb-2">Your Email</label>
-                <input type="email" class="form-control" name="email" id="email-field" required="">
-              </div>
-
-              <div class="col-md-12">
-                <label for="subject-field" class="pb-2">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject-field" required="">
-              </div>
-
-              <div class="col-md-12">
-                <label for="message-field" class="pb-2">Message</label>
-                <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
-              </div>
-
-              <div class="col-md-12 text-center">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                <button type="submit">Send Message</button>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input type="email" class="form-control" name="email" placeholder="Your Email" ngModel required>
               </div>
             </div>
-          </form> -->
-
-
-          <!-- Contact form: put this in place of your <form action="forms/contact.php"...> -->
-<form #contactForm="ngForm" (ngSubmit)="submitContact(contactForm)" novalidate class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-  <div class="row gy-4">
-    <div class="col-md-6">
-      <label for="name-field" class="pb-2">Your Name</label>
-      <input type="text" name="name" id="name-field" class="form-control" ngModel required>
-    </div>
-
-    <div class="col-md-6">
-      <label for="email-field" class="pb-2">Your Email</label>
-      <input type="email" class="form-control" name="email" id="email-field" ngModel required>
-    </div>
-
-    <div class="col-md-12">
-      <label for="subject-field" class="pb-2">Subject</label>
-      <input type="text" class="form-control" name="subject" id="subject-field" ngModel required>
-    </div>
-
-    <div class="col-md-12">
-      <label for="message-field" class="pb-2">Message</label>
-      <textarea class="form-control" name="message" rows="10" id="message-field" ngModel required></textarea>
-    </div>
-
-    <div class="col-md-12 text-center">
-      <div *ngIf="loading" class="loading">Loading</div>
-      <div class="error-message text-danger" *ngIf="error">{{ error }}</div>
-      <div class="sent-message text-success" *ngIf="sent">Your message has been sent. Thank you!</div>
-
-      <button type="submit" [disabled]="loading">Send Message</button>
-    </div>
-  </div>
-</form>
-
-        </div><!-- End Contact Form -->
-
+            <div class="form-group mt-3">
+              <input type="text" class="form-control" name="subject" placeholder="Subject" ngModel required>
+            </div>
+            <div class="form-group mt-3">
+              <textarea class="form-control" name="message" rows="6" placeholder="Message" ngModel required></textarea>
+            </div>
+            <div class="my-3">
+              <div *ngIf="loading" class="loading">Loading</div>
+              <div *ngIf="error" class="error-message">{{ error }}</div>
+              <div *ngIf="sent" class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit" class="btn btn-primary" [disabled]="loading">Send Message</button></div>
+          </form>
+        </div>
       </div>
     </div>
   </section>
   <!-- /Contact Section -->
-
 </main>
 
 <footer id="footer" class="footer position-relative ">
   <div class="container">
     <div class="copyright text-center ">
-      <p>© <strong class="px-1 sitename">NAVIN T V</strong> All Rights Reserved</p>
+      <p>© <strong class="px-1 sitename">{{ pageData?.header?.sitename || 'NAVIN T V' }}</strong> All Rights Reserved</p>
     </div>
     <div class="credits">
       Designed and Developed by NAVIN
@@ -843,10 +421,11 @@
 </footer>
 
 <!-- Scroll Top -->
-<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-    class="bi bi-arrow-up-short"></i></a>
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-   
+
+<a href="#" id="theme-toggle" class=" theme-toggle d-flex align-items-center justify-content-center"><div class="theme-toggle ms-2"> <button type="button" class="btn btn-sm btn-outline-primary rounded-circle " (click)="toggleTheme()" title="Toggle theme"> <i [class]="theme() === 'light' ? 'bi bi-moon' : 'bi bi-sun'"></i> </button> </div></a>
+x
 
 
 <!-- CALL button (opens dialer directly) -->
@@ -854,4 +433,5 @@
   <i class="bi bi-telephone-fill"></i>
 </a>
 
- 
+
+

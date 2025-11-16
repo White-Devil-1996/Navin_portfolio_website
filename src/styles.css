@@ -55,3 +55,52 @@
   --aqua-start: #00c6ff;
   --aqua-end: #0072ff;
 }
+/* Theme variables (light default) */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1f2937;
+  --muted-color: #6c757d;
+  --accent-color: #149ddd; /* default accent */
+  --card-bg: #ffffff;
+  --header-bg: #0f172a;
+  --section-bg: #f8fafc;
+}
+
+/* Dark theme overrides */
+.dark-theme {
+  --bg-color: #0b1220;
+  --text-color: #e6eef8;
+  --muted-color: #9aa6b2;
+  --accent-color: #2a9d6f; /* darker accent for dark theme */
+  --card-bg: #0f1724;
+  --header-bg: #071028;
+  --section-bg: #071028;
+}
+
+/* Apply variables to base site elements */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Example elements using variables (copy into your css as needed) */
+.header {
+  background: var(--header-bg);
+}
+.section {
+  background: var(--section-bg);
+}
+.pricing-card, .portfolio-content, .resume-item {
+  background: var(--card-bg);
+}
+
+/* Use accent for buttons, highlights */
+.btn-primary, .resume-download-btn {
+  background: var(--accent-color) !important;
+  border-color: transparent !important;
+}
+.badge-primary {
+  background: var(--accent-color) !important;
+}
+
+/* Keep your existing styles after these declarations */
