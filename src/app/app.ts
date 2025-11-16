@@ -8,7 +8,6 @@ import { AuthService } from './core/auth.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, LoaderComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

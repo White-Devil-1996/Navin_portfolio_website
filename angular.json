@@ -48,12 +48,7 @@
               "src/assets/vendor/isotope-layout/isotope.pkgd.min.js",
               "src/assets/vendor/swiper/swiper-bundle.min.js",
               "src/assets/js/main.js"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            ]
           },
           "configurations": {
             "production": {
