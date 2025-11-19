@@ -104,3 +104,26 @@ body {
 }
 
 /* Keep your existing styles after these declarations */
+
+
+
+.header .header-toggle {
+  color: var(--contrast-color);
+  background-color: var(--accent-color);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 99999999;
+  transition: background-color 0.3s;
+}
+.header .header-toggle:hover {
+  background-color: var(--accent-hover-color);
+}

@@ -28,6 +28,7 @@ export class App implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.removeItem('site-theme');
     // Start inactivity watching only when logged in
     this.auth.isLoggedIn$.subscribe(is => {
       if (is) this.inactivity.startWatching();

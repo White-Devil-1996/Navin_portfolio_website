@@ -592,7 +592,7 @@ accentColor = signal<string>('--149ddd');  // optional stored accent (value only
     if (!root) return;
     root.classList.toggle('dark-theme', theme === 'dark');
     // Optionally update CSS variable for accent (if you store accentColor value)
-    const accent = localStorage.getItem('site-accent-color');
+    const accent = sessionStorage.getItem('site-accent-color');
     if (accent) {
       root.style.setProperty('--accent-color', accent);
 
@@ -605,7 +605,7 @@ accentColor = signal<string>('--149ddd');  // optional stored accent (value only
 setTheme(theme: 'light' | 'dark') {
   this.theme.set(theme);
   // persist preference
-  try { localStorage.setItem('site-theme', theme); } catch (e) {}
+  try { sessionStorage.setItem('site-theme', theme); } catch (e) {}
   this.applyThemeToDocument(theme);
 }
 
@@ -621,15 +621,15 @@ toggleTheme() {
 setAccentColor(color: string) {
   try {
     document.documentElement.style.setProperty('--accent-color', color);
-    localStorage.setItem('site-accent-color', color);
+    sessionStorage.setItem('site-accent-color', color);
   } catch (e) { /* ignore */ }
 }
 
-/** Restore theme/accent from localStorage (call from ngOnInit) */
+/** Restore theme/accent from sessionStorage (call from ngOnInit) */
 private restoreThemeFromStorage() {
   if (typeof window === 'undefined') return;
   try {
-    const saved = localStorage.getItem('site-theme') as ('light'|'dark') | null;
+    const saved = sessionStorage.getItem('site-theme') as ('light'|'dark') | null;
     if (saved === 'dark' || saved === 'light') {
       this.theme.set(saved);
       this.applyThemeToDocument(saved);
@@ -641,7 +641,7 @@ private restoreThemeFromStorage() {
       this.applyThemeToDocument(defaultTheme);
     }
 
-    const savedAccent = localStorage.getItem('site-accent-color');
+    const savedAccent = sessionStorage.getItem('site-accent-color');
     if (savedAccent) {
       document.documentElement.style.setProperty('--accent-color', savedAccent);
     }
