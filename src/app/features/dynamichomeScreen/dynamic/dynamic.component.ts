@@ -15,7 +15,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class DynamicComponent implements OnInit, AfterViewInit {
   headerShow = signal(false);
   // inside DynamicComponent class (add alongside headerShow, loading etc.)
-theme = signal<'light' | 'dark'>('light'); // theme signal
+// theme = signal<'light' | 'dark'>('light'); // theme signal
 accentColor = signal<string>('--149ddd');  // optional stored accent (value only used when set)
 
 
@@ -193,7 +193,7 @@ accentColor = signal<string>('--149ddd');  // optional stored accent (value only
       this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
     }
 
-    this.restoreThemeFromStorage();
+    // this.restoreThemeFromStorage();
   }
 
   ngAfterViewInit() {
@@ -586,66 +586,66 @@ accentColor = signal<string>('--149ddd');  // optional stored accent (value only
 
 
 
-  private applyThemeToDocument(theme: 'light' | 'dark') {
-  try {
-    const root = document.documentElement;
-    if (!root) return;
-    root.classList.toggle('dark-theme', theme === 'dark');
-    // Optionally update CSS variable for accent (if you store accentColor value)
-    const accent = sessionStorage.getItem('site-accent-color');
-    if (accent) {
-      root.style.setProperty('--accent-color', accent);
+//   private applyThemeToDocument(theme: 'light' | 'dark') {
+//   try {
+//     const root = document.documentElement;
+//     if (!root) return;
+//     root.classList.toggle('dark-theme', theme === 'dark');
+//     // Optionally update CSS variable for accent (if you store accentColor value)
+//     const accent = sessionStorage.getItem('site-accent-color');
+//     if (accent) {
+//       root.style.setProperty('--accent-color', accent);
 
 
-      // root.style.setProperty('--background-color', theme === 'dark' ? '#121212' : '#ffffff');
-    }
-  } catch (e) { /* ignore in SSR or non-browser */ }
-}
+//       // root.style.setProperty('--background-color', theme === 'dark' ? '#121212' : '#ffffff');
+//     }
+//   } catch (e) { /* ignore in SSR or non-browser */ }
+// }
 
-setTheme(theme: 'light' | 'dark') {
-  this.theme.set(theme);
-  // persist preference
-  try { sessionStorage.setItem('site-theme', theme); } catch (e) {}
-  this.applyThemeToDocument(theme);
-}
+// setTheme(theme: 'light' | 'dark') {
+//   this.theme.set(theme);
+//   // persist preference
+//   try { sessionStorage.setItem('site-theme', theme); } catch (e) {}
+//   this.applyThemeToDocument(theme);
+// }
 
-toggleTheme() {
-  const next = this.theme() === 'light' ? 'dark' : 'light';
-  this.setTheme(next);
-}
+// toggleTheme() {
+//   const next = this.theme() === 'light' ? 'dark' : 'light';
+//   this.setTheme(next);
+// }
 
 /**
  * Optional: change accent color dynamically
  * pass e.g. '#ff6b6b' or 'rgb(40,167,69)'
  */
-setAccentColor(color: string) {
-  try {
-    document.documentElement.style.setProperty('--accent-color', color);
-    sessionStorage.setItem('site-accent-color', color);
-  } catch (e) { /* ignore */ }
-}
+// setAccentColor(color: string) {
+//   try {
+//     document.documentElement.style.setProperty('--accent-color', color);
+//     sessionStorage.setItem('site-accent-color', color);
+//   } catch (e) { /* ignore */ }
+// }
 
-/** Restore theme/accent from sessionStorage (call from ngOnInit) */
-private restoreThemeFromStorage() {
-  if (typeof window === 'undefined') return;
-  try {
-    const saved = sessionStorage.getItem('site-theme') as ('light'|'dark') | null;
-    if (saved === 'dark' || saved === 'light') {
-      this.theme.set(saved);
-      this.applyThemeToDocument(saved);
-    } else {
-      // optionally use system preference as default:
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const defaultTheme: 'dark'|'light' = prefersDark ? 'dark' : 'light';
-      this.theme.set(defaultTheme);
-      this.applyThemeToDocument(defaultTheme);
-    }
+// /** Restore theme/accent from sessionStorage (call from ngOnInit) */
+// private restoreThemeFromStorage() {
+//   if (typeof window === 'undefined') return;
+//   try {
+//     const saved = sessionStorage.getItem('site-theme') as ('light'|'dark') | null;
+//     if (saved === 'dark' || saved === 'light') {
+//       this.theme.set(saved);
+//       this.applyThemeToDocument(saved);
+//     } else {
+//       // optionally use system preference as default:
+//       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+//       const defaultTheme: 'dark'|'light' = prefersDark ? 'dark' : 'light';
+//       this.theme.set(defaultTheme);
+//       this.applyThemeToDocument(defaultTheme);
+//     }
 
-    const savedAccent = sessionStorage.getItem('site-accent-color');
-    if (savedAccent) {
-      document.documentElement.style.setProperty('--accent-color', savedAccent);
-    }
-  } catch (e) { /* ignore */ }
-}
+//     const savedAccent = sessionStorage.getItem('site-accent-color');
+//     if (savedAccent) {
+//       document.documentElement.style.setProperty('--accent-color', savedAccent);
+//     }
+//   } catch (e) { /* ignore */ }
+// }
 
 }
