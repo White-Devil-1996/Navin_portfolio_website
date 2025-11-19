@@ -41,7 +41,7 @@ accentColor = signal<string>('--149ddd');  // optional stored accent (value only
     // Build the JSON data used by template
     this.pageData = {
       header: {
-        sitename: 'NAVIN T V',
+        sitename: 'NAVIN T V Smart Portfolio',
         profileImg: 'assets/img/portfolios/IMG_0976.JPG',
         social: [
           { name: 'twitter', href: '#', icon: 'bi bi-twitter-x' },
